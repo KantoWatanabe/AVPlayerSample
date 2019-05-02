@@ -12,6 +12,7 @@
 		57210B25227B42F000D243F0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57210B23227B42F000D243F0 /* Main.storyboard */; };
 		57210B27227B42F200D243F0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 57210B26227B42F200D243F0 /* Assets.xcassets */; };
 		57210B2A227B42F200D243F0 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 57210B28227B42F200D243F0 /* LaunchScreen.storyboard */; };
+		57210B43227B503300D243F0 /* sample.m3u8 in Resources */ = {isa = PBXBuildFile; fileRef = 57210B42227B503300D243F0 /* sample.m3u8 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		57210B26227B42F200D243F0 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		57210B29227B42F200D243F0 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		57210B2B227B42F200D243F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		57210B42227B503300D243F0 /* sample.m3u8 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = sample.m3u8; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,11 +59,20 @@
 				57210B1F227B42F000D243F0 /* AppDelegate.swift */,
 				57210B21227B42F000D243F0 /* ViewController.swift */,
 				57210B23227B42F000D243F0 /* Main.storyboard */,
+				57210B41227B4FF300D243F0 /* assets */,
 				57210B26227B42F200D243F0 /* Assets.xcassets */,
 				57210B28227B42F200D243F0 /* LaunchScreen.storyboard */,
 				57210B2B227B42F200D243F0 /* Info.plist */,
 			);
 			path = AVPlayerSample;
+			sourceTree = "<group>";
+		};
+		57210B41227B4FF300D243F0 /* assets */ = {
+			isa = PBXGroup;
+			children = (
+				57210B42227B503300D243F0 /* sample.m3u8 */,
+			);
+			path = assets;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +133,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				57210B43227B503300D243F0 /* sample.m3u8 in Resources */,
 				57210B2A227B42F200D243F0 /* LaunchScreen.storyboard in Resources */,
 				57210B27227B42F200D243F0 /* Assets.xcassets in Resources */,
 				57210B25227B42F000D243F0 /* Main.storyboard in Resources */,
@@ -285,6 +297,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C763MAG2BQ;
 				INFOPLIST_FILE = AVPlayerSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -303,6 +316,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = C763MAG2BQ;
 				INFOPLIST_FILE = AVPlayerSample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
