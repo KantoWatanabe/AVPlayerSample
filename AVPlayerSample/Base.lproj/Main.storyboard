@@ -31,6 +31,9 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BnI-ak-JE1">
                                         <rect key="frame" x="0.0" y="80" width="162" height="30"/>
                                         <state key="normal" title="AVPlayer"/>
+                                        <connections>
+                                            <action selector="avPlayerBtnTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8fU-gl-x9A"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>

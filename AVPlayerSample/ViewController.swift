@@ -12,6 +12,8 @@ import AVFoundation
 
 class ViewController: UIViewController {
     
+    var hlsUrl = "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_adv_example_hevc/master.m3u8"
+    
     // MARK: View LifeCycle
     
     override func viewDidLoad() {
@@ -23,6 +25,13 @@ class ViewController: UIViewController {
     
     @IBAction func avPlayerViewControllerBtnTapped(_ sender: Any) {
         playByAVPlayerViewController()
+    }
+    
+    @IBAction func avPlayerBtnTapped(_ sender: Any) {
+        let storyboard = UIStoryboard(name: "AVPlayerSampleViewController", bundle: nil)
+        let avPlayerSampleViewController = storyboard.instantiateViewController(withIdentifier: "avPlayerSample") as! AVPlayerSampleViewController
+        avPlayerSampleViewController.hlsUrl = hlsUrl
+        self.navigationController?.pushViewController(avPlayerSampleViewController, animated: true)
     }
     
     // MARK: private method
@@ -39,11 +48,11 @@ class ViewController: UIViewController {
         
         //let avPlayer = AVPlayer(url: URL(fileURLWithPath: m3u8Path))
         
-        guard let hlsUrl = URL(string: "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_adv_example_hevc/master.m3u8") else {
+        guard let url = URL(string: hlsUrl) else {
             return
         }
         
-        let avPlayerItem = AVPlayerItem(url: hlsUrl)
+        let avPlayerItem = AVPlayerItem(url: url)
         
         // 字幕の制御
         // https://developer.apple.com/documentation/avfoundation/media_assets_playback_and_editing/adding_subtitles_and_alternative_audio_tracks
