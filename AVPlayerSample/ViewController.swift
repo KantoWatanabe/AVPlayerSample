@@ -43,7 +43,27 @@ class ViewController: UIViewController {
             return
         }
         
-        let avPlayer = AVPlayer(url: hlsUrl)
+        let avPlayerItem = AVPlayerItem(url: hlsUrl)
+        
+        // 字幕の制御
+        // https://developer.apple.com/documentation/avfoundation/media_assets_playback_and_editing/adding_subtitles_and_alternative_audio_tracks
+        // https://qiita.com/roba4coding/items/ea3b9084143b0aeaa771
+        if let group = avPlayerItem.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic.legible) {
+            for option in group.options {
+                print(option.displayName)
+            }
+            
+            let locale = Locale(identifier: "en")
+            let options = AVMediaSelectionGroup.mediaSelectionOptions(from: group.options, with: locale)
+            if let option = options.first {
+                avPlayerItem.select(option, in: group)
+            }
+            
+            // 字幕をOFFに
+            //avPlayerItem.select(nil, in: group)
+        }
+        
+        let avPlayer = AVPlayer(playerItem: avPlayerItem)
         
         let avPlayerViewController = AVPlayerViewController()
         avPlayerViewController.player = avPlayer
