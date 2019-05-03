@@ -28,10 +28,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func avPlayerBtnTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "AVPlayerSampleViewController", bundle: nil)
-        let avPlayerSampleViewController = storyboard.instantiateViewController(withIdentifier: "avPlayerSample") as! AVPlayerSampleViewController
-        avPlayerSampleViewController.hlsUrl = hlsUrl
-        self.navigationController?.pushViewController(avPlayerSampleViewController, animated: true)
+        playByAVPlayer()
     }
     
     // MARK: private method
@@ -81,5 +78,14 @@ class ViewController: UIViewController {
             avPlayer.play()
         })
     }
+    
+    private func playByAVPlayer() {
+        let storyboard = UIStoryboard(name: "AVPlayerSampleViewController", bundle: nil)
+        let avPlayerSampleViewController = storyboard.instantiateViewController(withIdentifier: "avPlayerSample") as! AVPlayerSampleViewController
+        avPlayerSampleViewController.hlsUrl = hlsUrl
+        //self.navigationController?.pushViewController(avPlayerSampleViewController, animated: true)
+        self.present(avPlayerSampleViewController, animated: true, completion: nil)
+    }
+    
 }
 

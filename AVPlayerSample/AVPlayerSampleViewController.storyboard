@@ -73,6 +73,16 @@
                                     </switch>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tFg-M9-Cp6">
+                                <rect key="frame" x="216.5" y="402" width="50" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="GJ2-68-VQv"/>
+                                </constraints>
+                                <state key="normal" title="Back"/>
+                                <connections>
+                                    <action selector="backBtnTapped:" destination="hVB-Qa-CbX" eventType="touchUpInside" id="b9u-vM-v0v"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -82,6 +92,8 @@
                             <constraint firstItem="faE-vB-wXm" firstAttribute="centerX" secondItem="61H-gi-ZrT" secondAttribute="centerX" id="GkB-eT-3g4"/>
                             <constraint firstItem="jyF-gr-URV" firstAttribute="leading" secondItem="JWe-u9-Whg" secondAttribute="leading" id="H6w-Yx-LKp"/>
                             <constraint firstAttribute="trailing" secondItem="jyF-gr-URV" secondAttribute="trailing" id="Ob4-4a-AN6"/>
+                            <constraint firstItem="tFg-M9-Cp6" firstAttribute="trailing" secondItem="LMX-lA-ywH" secondAttribute="trailing" id="YlQ-5f-Xue"/>
+                            <constraint firstItem="tFg-M9-Cp6" firstAttribute="top" secondItem="LMX-lA-ywH" secondAttribute="bottom" constant="50" id="ahY-lJ-EF4"/>
                             <constraint firstItem="faE-vB-wXm" firstAttribute="top" secondItem="jyF-gr-URV" secondAttribute="bottom" constant="30" id="fkI-rb-Laq"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="JWe-u9-Whg"/>

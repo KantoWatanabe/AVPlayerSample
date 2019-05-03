@@ -66,4 +66,8 @@ class AVPlayerSampleViewController: UIViewController {
             playerItem?.select(nil, in: group)
         }
     }
+    
+    @IBAction func backBtnTapped(_ sender: Any) {
+        self.dismiss(animated: true, completion: nil)
+    }
 }
