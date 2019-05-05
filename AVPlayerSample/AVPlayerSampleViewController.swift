@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import AVFoundation
+import MediaPlayer
 
 class AVPlayerSampleViewController: UIViewController {
 
@@ -23,56 +24,121 @@ class AVPlayerSampleViewController: UIViewController {
     
     var hlsUrl: String?
     
+    // MARK: View LifeCycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let url = URL(string: hlsUrl!) else {
-            return
-        }
-
-        playerItem = AVPlayerItem(url: url)
-        player = AVPlayer(playerItem: playerItem)
+        setupPlayer()
         
-        playerView.player = player
-        playerView.videoGravity = AVLayerVideoGravity.resizeAspect
-        player?.play()
-        
-        let routePickerView = AVRoutePickerView(frame: CGRect(x: 0, y: 10, width: 50, height: 50))
-        self.view.addSubview(routePickerView)
-        
+        addRemoteCommand()
+        addNowPlayingInfo()
     }
     
+    // MARK: IBActions
 
     @IBAction func playBtnTapped(_ sender: Any) {
+        play()
+    }
+    
+    @IBAction func pauseBtnTapped(_ sender: Any) {
+        pause()
+    }
+    
+    @IBAction func subtitleSwitchChanged(_ sender: Any) {
+        if (sender as! UISwitch).isOn {
+            onSubtitle()
+        } else {
+            offSubtitle()
+        }
+    }
+    
+    @IBAction func backBtnTapped(_ sender: Any) {
+        pause()
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: Player Methods
+
+    func play() {
         if !isPlaying {
             player?.play()
         }
     }
     
-    @IBAction func pauseBtnTapped(_ sender: Any) {
+    func pause() {
         if isPlaying {
             player?.pause()
         }
     }
     
-    @IBAction func subtitleSwitchChanged(_ sender: Any) {
+    func onSubtitle() {
         guard let group = playerItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic.legible) else {
             return
         }
-        if (sender as! UISwitch).isOn {
-            // 字幕をONに
-            let locale = Locale(identifier: "en")
-            let options = AVMediaSelectionGroup.mediaSelectionOptions(from: group.options, with: locale)
-            if let option = options.first {
-                playerItem?.select(option, in: group)
-            }
-        } else {
-            // 字幕をOFFに
-            playerItem?.select(nil, in: group)
+        
+        let locale = Locale(identifier: "en")
+        let options = AVMediaSelectionGroup.mediaSelectionOptions(from: group.options, with: locale)
+        if let option = options.first {
+            playerItem?.select(option, in: group)
         }
     }
     
-    @IBAction func backBtnTapped(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
+    func offSubtitle() {
+        guard let group = playerItem?.asset.mediaSelectionGroup(forMediaCharacteristic: AVMediaCharacteristic.legible) else {
+            return
+        }
+        
+        playerItem?.select(nil, in: group)
     }
+    
+    // MARK: Initialization Methods
+   
+    func setupPlayer() {
+        guard let url = URL(string: hlsUrl!) else {
+            return
+        }
+        
+        playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        playerView.player = player
+        playerView.videoGravity = AVLayerVideoGravity.resizeAspect
+        
+        play()
+    }
+    
+    func addRemoteCommand() {
+        let remoteCommandCenter = MPRemoteCommandCenter.shared()
+        
+        remoteCommandCenter.playCommand.addTarget(handler: { (event) in
+            self.play()
+            return MPRemoteCommandHandlerStatus.success})
+        remoteCommandCenter.pauseCommand.addTarget(handler: { (event) in
+            self.pause()
+            return MPRemoteCommandHandlerStatus.success})
+        //remoteCommandCenter.seekForwardCommand.addTarget(handler: { (event) in
+        //    return MPRemoteCommandHandlerStatus.success})
+        //remoteCommandCenter.seekBackwardCommand.addTarget(handler: { (event) in
+        //    return MPRemoteCommandHandlerStatus.success})
+        
+        //remoteCommandCenter.previousTrackCommand.isEnabled = false
+        //remoteCommandCenter.nextTrackCommand.isEnabled = false
+        //remoteCommandCenter.skipForwardCommand.isEnabled = false
+        //remoteCommandCenter.skipBackwardCommand.isEnabled = false
+    }
+    
+    func addNowPlayingInfo() {
+        let nowPlayingInfoCenter = MPNowPlayingInfoCenter.default()
+        let duration = player?.currentItem?.asset.duration.seconds
+        let currentTime = player?.currentItem?.currentTime().seconds
+        nowPlayingInfoCenter.nowPlayingInfo = [
+            MPMediaItemPropertyTitle: "hoge",
+            MPMediaItemPropertyArtist: "fuga",
+            MPNowPlayingInfoPropertyPlaybackRate: NSNumber(value: 1.0),
+            MPMediaItemPropertyPlaybackDuration: NSNumber(value: duration!),
+            MPNowPlayingInfoPropertyElapsedPlaybackTime: NSNumber(value: currentTime!)
+        ]
+    }
+    
 }
