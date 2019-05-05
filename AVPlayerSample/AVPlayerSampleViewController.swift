@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import AVKit
 import AVFoundation
 
 class AVPlayerSampleViewController: UIViewController {
@@ -35,6 +36,10 @@ class AVPlayerSampleViewController: UIViewController {
         playerView.player = player
         playerView.videoGravity = AVLayerVideoGravity.resizeAspect
         player?.play()
+        
+        let routePickerView = AVRoutePickerView(frame: CGRect(x: 0, y: 10, width: 50, height: 50))
+        self.view.addSubview(routePickerView)
+        
     }
     
 

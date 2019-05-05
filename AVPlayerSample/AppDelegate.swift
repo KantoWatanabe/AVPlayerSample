@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import AVKit
 import AVFoundation
 
 @UIApplicationMain
@@ -20,7 +19,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // BG再生を可能にする
         let audioSession = AVAudioSession.sharedInstance()
         do {
-            try audioSession.setCategory(.playback, mode: .moviePlayback)
+            //try audioSession.setCategory(.playback, mode: .moviePlayback)
+            // AirPlay2を使用する場合
+            try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .longForm)
         }
         catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
