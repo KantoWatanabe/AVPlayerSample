@@ -30,6 +30,7 @@ class AVPlayerSampleViewController: UIViewController {
         super.viewDidLoad()
         
         setupPlayer()
+        setupAirPlay()
         
         addRemoteCommand()
         addNowPlayingInfo()
@@ -106,6 +107,13 @@ class AVPlayerSampleViewController: UIViewController {
         playerView.videoGravity = AVLayerVideoGravity.resizeAspect
         
         play()
+        
+
+    }
+    
+    func setupAirPlay() {
+        let routePickerView = AVRoutePickerView(frame: CGRect(x: 0, y: 10, width: 50, height: 50))
+        self.view.addSubview(routePickerView)
     }
     
     func addRemoteCommand() {
