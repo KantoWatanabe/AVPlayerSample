@@ -36,6 +36,18 @@ class AVPlayerSampleViewController: UIViewController {
         addNowPlayingInfo()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectPlayer(_:)), name: UIApplication.willEnterForegroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(disconnectPlayer(_:)), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+        pause()
+    }
+    
     // MARK: IBActions
 
     @IBAction func playBtnTapped(_ sender: Any) {
@@ -57,6 +69,16 @@ class AVPlayerSampleViewController: UIViewController {
     @IBAction func backBtnTapped(_ sender: Any) {
         pause()
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    // MARK: NotificationCenter
+
+    @objc func connectPlayer(_ notificaiton: Notification) {
+        playerView.player = player
+    }
+    
+    @objc func disconnectPlayer(_ notificaiton: Notification) {
+        playerView.player = nil
     }
     
     // MARK: Player Methods
@@ -107,8 +129,6 @@ class AVPlayerSampleViewController: UIViewController {
         playerView.videoGravity = AVLayerVideoGravity.resizeAspect
         
         play()
-        
-
     }
     
     func setupAirPlay() {

@@ -22,6 +22,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             //try audioSession.setCategory(.playback, mode: .moviePlayback)
             // AirPlay2を使用する場合
             try audioSession.setCategory(.playback, mode: .moviePlayback, policy: .longForm)
+            try audioSession.setActive(true, options: .notifyOthersOnDeactivation)
         }
         catch {
             print("Setting category to AVAudioSessionCategoryPlayback failed.")
