@@ -14,6 +14,8 @@ import MediaPlayer
 class AVPlayerSampleViewController: UIViewController {
 
     @IBOutlet weak var playerView: PlayerView!
+    @IBOutlet weak var pipStartButton: UIButton!
+    @IBOutlet weak var pipStopButton: UIButton!
     
     var playerItem: AVPlayerItem?
     var player: AVPlayer?
@@ -28,6 +30,11 @@ class AVPlayerSampleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let pipStartImage = AVPictureInPictureController.pictureInPictureButtonStartImage(compatibleWith: nil)
+        let pipStopImage = AVPictureInPictureController.pictureInPictureButtonStopImage(compatibleWith: nil)
+        pipStartButton.setImage(pipStartImage, for: .normal)
+        pipStopButton.setImage(pipStopImage, for: .normal)
         
         setupPlayer()
         setupAirPlay()
