@@ -1,7 +1,12 @@
 WEBVTT
 
+STYLE
+::cue(b) {
+  color: peachpuff;
+}
+
 00:00:00.000 --> 00:00:04.000 position:10%,line-left align:left size:35%
-Where did he go?
+<b>Where did he go?</b>
 
 00:00:03.000 --> 00:00:06.500 position:90% align:right size:35%
 I think he went down this lane.
