@@ -13,6 +13,8 @@ import AVFoundation
 class ViewController: UIViewController {
     
     var hlsUrl = "https://devstreaming-cdn.apple.com/videos/streaming/examples/bipbop_adv_example_hevc/master.m3u8"
+    //var hlsUrl = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
+    var vttUrl = "https://kantowatanabe.github.io/AVPlayerSample/TestData/test.vtt"
     
     // MARK: View LifeCycle
     
@@ -83,6 +85,7 @@ class ViewController: UIViewController {
         let storyboard = UIStoryboard(name: "AVPlayerSampleViewController", bundle: nil)
         let avPlayerSampleViewController = storyboard.instantiateViewController(withIdentifier: "avPlayerSample") as! AVPlayerSampleViewController
         avPlayerSampleViewController.hlsUrl = hlsUrl
+        avPlayerSampleViewController.vttUrl = vttUrl
         //self.navigationController?.pushViewController(avPlayerSampleViewController, animated: true)
         self.present(avPlayerSampleViewController, animated: true, completion: nil)
     }

@@ -25,7 +25,8 @@ class AVPlayerSampleViewController: UIViewController {
     }
     
     var hlsUrl: String?
-    
+    var vttUrl: String?
+
     // MARK: View LifeCycle
     
     override func viewDidLoad() {
@@ -37,6 +38,7 @@ class AVPlayerSampleViewController: UIViewController {
         pipStopButton.setImage(pipStopImage, for: .normal)
         
         setupPlayer()
+        //setupPlayerWithComposition()
         setupAirPlay()
         
         addRemoteCommand()
@@ -130,6 +132,64 @@ class AVPlayerSampleViewController: UIViewController {
         }
         
         playerItem = AVPlayerItem(url: url)
+        player = AVPlayer(playerItem: playerItem)
+        
+        playerView.player = player
+        playerView.videoGravity = AVLayerVideoGravity.resizeAspect
+        
+        play()
+    }
+    
+    /**
+     AVMutableCompositionを使用して外部のvttを読み込む場合、HLSではhlsUrlAsset.tracksが空になるので動作しない
+        https://stackoverflow.com/questions/52409687/cant-able-to-get-video-tracks-from-avurlasset-for-hls-videos-m3u8-format-for
+        mp4では動作する
+     */
+    func setupPlayerWithComposition() {
+        guard let hls = URL(string: hlsUrl!) else {
+            return
+        }
+        guard let vtt = URL(string: vttUrl!) else {
+            return
+        }
+        
+        let composition = AVMutableComposition()
+        let hlsUrlAsset = AVURLAsset(url: hls)
+        let textUrlAsset = AVURLAsset(url: vtt)
+        
+        let videoTrack = composition.addMutableTrack(withMediaType: .video, preferredTrackID: kCMPersistentTrackID_Invalid)
+        let audioTrack = composition.addMutableTrack(withMediaType: .audio, preferredTrackID: kCMPersistentTrackID_Invalid)
+        do{
+            guard hlsUrlAsset.tracks(withMediaType: .video).count > 0 else {
+                return
+            }
+
+            try? videoTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: hlsUrlAsset.duration),
+                                             of: hlsUrlAsset.tracks(withMediaType: .video)[0],
+                                             at: CMTime.zero)
+
+            guard hlsUrlAsset.tracks(withMediaType: .audio).count > 0 else {
+                return
+            }
+            try? audioTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: hlsUrlAsset.duration),
+                                             of: hlsUrlAsset.tracks(withMediaType: .audio)[0],
+                                             at: CMTime.zero)
+        }
+        
+        let textTrack = composition.addMutableTrack(withMediaType: .text, preferredTrackID: kCMPersistentTrackID_Invalid)
+        do {
+            guard textUrlAsset.tracks.count > 0 else{
+                return
+            }
+            
+            textTrack?.languageCode = "en"
+            try? textTrack?.insertTimeRange(CMTimeRangeMake(start: CMTime.zero, duration: hlsUrlAsset.duration),
+                                                of: textUrlAsset.tracks(withMediaType: .text)[0],
+                                                at: CMTime.zero)
+
+        }
+        
+        playerItem = AVPlayerItem(asset: composition)
         player = AVPlayer(playerItem: playerItem)
         
         playerView.player = player
